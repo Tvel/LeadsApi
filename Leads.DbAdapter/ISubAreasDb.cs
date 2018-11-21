@@ -9,7 +9,7 @@
     {
         Task<List<SubAreaViewModel>> GetAll();
 
-        Task<List<SubAreaViewModel>> GetByPinCode(int pinCode);
+        Task<List<SubAreaViewModel>> GetByPinCode(string pinCode);
 
         Task<SubAreaViewModel> GetById(int Id);
     }

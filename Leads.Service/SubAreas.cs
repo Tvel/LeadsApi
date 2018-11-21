@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("Leads.Services.Tests")]
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Leads.Services.Tests")]
 namespace Leads.Services
 {
     using System;
@@ -10,23 +8,28 @@ namespace Leads.Services
     using DbAdapter;
     using Models;
 
-    class SubAreas
+    public class SubAreas
     {
-        private readonly ISubAreasDb subAreasDbDb;
+        private readonly ISubAreasDb subAreasDb;
 
-        public SubAreas(ISubAreasDb subAreasDbDb)
+        public SubAreas(ISubAreasDb subAreasDb)
         {
-
+            this.subAreasDb = subAreasDb;
         }
 
-        public async Task<List<SubAreaViewModel>> GetAll()
+        public Task<List<SubAreaViewModel>> GetAll()
         {
-            throw  new NotImplementedException();
+            return this.subAreasDb.GetAll();
         }
 
-        public async Task<List<SubAreaViewModel>> GetByPinCode(int pinCodeId)
+        public Task<List<SubAreaViewModel>> GetByPinCode(string pinCode)
         {
-            throw  new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(pinCode))
+            {
+                throw new ArgumentException("PinCode cannot be null or empty");
+            }
+
+            return this.subAreasDb.GetByPinCode(pinCode);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("Leads.Services.Tests")]
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Leads.Services.Tests")]
 namespace Leads.Services
 {
     using System;

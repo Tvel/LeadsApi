@@ -35,6 +35,7 @@ namespace Leads.Services.Tests
 
             var resultLead = await this.leads.Get(1).ConfigureAwait(false);
             Assert.Equal(resultLead, lead);
+            Assert.True(this.leadsMock.IsGetByIdCalled);
         }
 
         [Fact]
@@ -66,6 +67,21 @@ namespace Leads.Services.Tests
 
             var resultLead = await leads.Save(saveModel).ConfigureAwait(false);
             Assert.True(resultLead);
+        }
+
+        [Fact]
+        public async void WhenValidSaveModelIsSavedDbIsCalled()
+        {
+            subAreasMock.GetByIdReturn = new SubAreaViewModel{ PinCode = "123" };
+            var saveModel = new LeadSaveModel
+                                {
+                                    Name = "name", Address = "addr", Email = "email@email.email", MobileNumber = "12345", PinCode = "123", SubAreaId = 1
+                                };
+            var viewModel = new LeadViewModel();
+            leadsMock.SaveReturn = viewModel;
+
+            var resultLead = await leads.Save(saveModel).ConfigureAwait(false);
+            Assert.True(leadsMock.IsSaveCalled);
         }
 
         [Fact]

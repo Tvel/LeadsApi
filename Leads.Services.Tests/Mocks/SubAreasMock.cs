@@ -11,13 +11,18 @@ namespace Leads.Services.Tests.Mocks
         public List<SubAreaViewModel> GetByPinCodeReturn { get; set; }
         public SubAreaViewModel GetByIdReturn { get; set; }
 
+        public bool IsGetAllCalled { get; set; } = false;
+        public bool IsGetByPinCodeCalled { get; set; } = false;
+
         public Task<List<SubAreaViewModel>> GetAll()
         {
+            IsGetAllCalled = true;
             return Task.FromResult(GetAllReturn);
         }
 
-        public Task<List<SubAreaViewModel>> GetByPinCode(int pinCode)
+        public Task<List<SubAreaViewModel>> GetByPinCode(string pinCode)
         {
+            IsGetByPinCodeCalled = true;
             return Task.FromResult(GetByPinCodeReturn);
         }
 
