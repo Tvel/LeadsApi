@@ -13,6 +13,7 @@ namespace Leads.Services.Tests.Mocks
 
         public bool IsGetAllCalled { get; set; } = false;
         public bool IsGetByPinCodeCalled { get; set; } = false;
+        public bool IsGetByIdCalled { get; set; } = false;
 
         public Task<List<SubAreaViewModel>> GetAll()
         {
@@ -28,6 +29,7 @@ namespace Leads.Services.Tests.Mocks
 
         public Task<SubAreaViewModel> GetById(int Id)
         {
+            IsGetByIdCalled = true;
             return Task.FromResult(GetByIdReturn);
         }
     }

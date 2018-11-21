@@ -39,9 +39,17 @@ namespace Leads.Services
             }
         }
 
-        public Task<LeadViewModel> Get(int id)
+        public async Task<LeadViewModel> Get(int id)
         {
-            return this.leadsDb.GetById(id);
+            var lead = await this.leadsDb.GetById(id);
+            if (lead is null)
+            {
+                return null;
+            }
+
+            lead.SubArea = await this.subAreasDb.GetById(lead.SubAreaId);
+
+            return lead;
         }
 
         private void ValidateSaveModel(LeadSaveModel candidate)

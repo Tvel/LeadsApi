@@ -39,6 +39,19 @@ namespace Leads.Services.Tests
         }
 
         [Fact]
+        public async void WhenYouGetByIdDbReturnsSubAreaAsWell()
+        {
+            var lead = new LeadViewModel();
+            this.leadsMock.GetReturn = lead;
+            var subArea = new SubAreaViewModel();
+            this.subAreasMock.GetByIdReturn = subArea;
+
+            var resultLead = await this.leads.Get(1).ConfigureAwait(false);
+            Assert.Equal(subArea, lead.SubArea);
+            Assert.True(this.subAreasMock.IsGetByIdCalled);
+        }
+
+        [Fact]
         public async void WhenYouGetByInvalidIdDbReturnsNull()
         {
             leadsMock.GetReturn = null;
