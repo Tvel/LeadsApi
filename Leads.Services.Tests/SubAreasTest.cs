@@ -11,19 +11,19 @@ namespace Leads.Services.Tests
     {
         private readonly SubAreasMock subAreasDbMock;
 
-        private readonly SubAreas subAreas;
+        private readonly SubAreasService subAreasService;
 
         public SubAreasTest()
         {
             this.subAreasDbMock = new SubAreasMock();
 
-            this.subAreas = new SubAreas(this.subAreasDbMock);
+            this.subAreasService = new SubAreasService(this.subAreasDbMock);
         }
 
         [Fact]
         public void SubAreasCanBeConstructed()
         {
-            Assert.NotNull(this.subAreas);
+            Assert.NotNull(this.subAreasService);
         }
 
         [Fact]
@@ -32,14 +32,14 @@ namespace Leads.Services.Tests
             var resultList = new List<SubAreaViewModel>();
             this.subAreasDbMock.GetAllReturn = resultList;
 
-            var result = await this.subAreas.GetAll().ConfigureAwait(false);
+            var result = await this.subAreasService.GetAll().ConfigureAwait(false);
             Assert.Equal(resultList, result);
         }
 
         [Fact]
         public async void GetAllCallsDb()
         {
-            var result = await this.subAreas.GetAll().ConfigureAwait(false);
+            var result = await this.subAreasService.GetAll().ConfigureAwait(false);
             Assert.True(this.subAreasDbMock.IsGetAllCalled);
         }
 
@@ -49,7 +49,7 @@ namespace Leads.Services.Tests
             var resultList = new List<SubAreaViewModel>();
             this.subAreasDbMock.GetByPinCodeReturn = resultList;
 
-            var result = await this.subAreas.GetByPinCode("123").ConfigureAwait(false);
+            var result = await this.subAreasService.GetByPinCode("123").ConfigureAwait(false);
             Assert.Equal(resultList, result);
         }
 
@@ -58,7 +58,7 @@ namespace Leads.Services.Tests
         {
             var resultList = new List<SubAreaViewModel>();
 
-            var result = await this.subAreas.GetByPinCode("123").ConfigureAwait(false);
+            var result = await this.subAreasService.GetByPinCode("123").ConfigureAwait(false);
             Assert.True(this.subAreasDbMock.IsGetByPinCodeCalled);
         }
 
@@ -68,7 +68,7 @@ namespace Leads.Services.Tests
             var resultList = new List<SubAreaViewModel>();
 
             await Assert.ThrowsAsync<ArgumentException>(
-                async () => await this.subAreas.GetByPinCode(null).ConfigureAwait(false));
+                async () => await this.subAreasService.GetByPinCode(null).ConfigureAwait(false));
         }
     }
 }

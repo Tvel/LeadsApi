@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 
 namespace Leads.Services.Tests.Mocks
 {
+    using System;
+
     class LeadsDbMock : ILeadsDb
     {
         public LeadViewModel GetReturn { get; set; }
@@ -12,7 +14,7 @@ namespace Leads.Services.Tests.Mocks
         public bool IsSaveCalled { get; set; } = false;
         public bool IsGetByIdCalled { get; set; } = false;
 
-        public Task<LeadViewModel> GetById(int Id)
+        public Task<LeadViewModel> GetById(Guid id)
         {
             IsGetByIdCalled = true;
             return Task.FromResult<LeadViewModel>(GetReturn);

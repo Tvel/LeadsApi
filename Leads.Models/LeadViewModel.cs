@@ -1,10 +1,10 @@
 ﻿namespace Leads.Models
 {
-    using System.Dynamic;
+    using System;
 
     public class LeadViewModel : LeadSaveModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public SubAreaViewModel SubArea { get; set; }
     }
 }

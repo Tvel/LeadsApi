@@ -27,7 +27,7 @@ namespace Leads.Services.Tests.Mocks
             return Task.FromResult(GetByPinCodeReturn);
         }
 
-        public Task<SubAreaViewModel> GetById(int Id)
+        public Task<SubAreaViewModel> GetById(int id)
         {
             IsGetByIdCalled = true;
             return Task.FromResult(GetByIdReturn);

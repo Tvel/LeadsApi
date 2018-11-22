@@ -1,4 +1,4 @@
-﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Leads.Services.Tests")]
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("LeadsService.Services.Tests")]
 namespace Leads.Services
 {
     using System;
@@ -7,12 +7,12 @@ namespace Leads.Services
     using DbAdapter;
     using Models;
 
-    public class Leads
+    public class LeadsService
     {
         private readonly ILeadsDb leadsDb;
         private readonly ISubAreasDb subAreasDb;
 
-        public Leads(ILeadsDb leadsDb, ISubAreasDb subAreasDb)
+        public LeadsService(ILeadsDb leadsDb, ISubAreasDb subAreasDb)
         {
             this.leadsDb = leadsDb;
             this.subAreasDb = subAreasDb;
@@ -39,7 +39,7 @@ namespace Leads.Services
             }
         }
 
-        public async Task<LeadViewModel> Get(int id)
+        public async Task<LeadViewModel> Get(Guid id)
         {
             var lead = await this.leadsDb.GetById(id);
             if (lead is null)

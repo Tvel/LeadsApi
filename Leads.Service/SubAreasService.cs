@@ -1,4 +1,4 @@
-﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Leads.Services.Tests")]
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("LeadsService.Services.Tests")]
 namespace Leads.Services
 {
     using System;
@@ -8,11 +8,11 @@ namespace Leads.Services
     using DbAdapter;
     using Models;
 
-    public class SubAreas
+    public class SubAreasService
     {
         private readonly ISubAreasDb subAreasDb;
 
-        public SubAreas(ISubAreasDb subAreasDb)
+        public SubAreasService(ISubAreasDb subAreasDb)
         {
             this.subAreasDb = subAreasDb;
         }

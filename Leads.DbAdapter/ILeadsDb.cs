@@ -1,5 +1,6 @@
 ﻿namespace Leads.DbAdapter
 {
+    using System;
     using System.Threading.Tasks;
 
     using Models;
@@ -8,6 +9,6 @@
     {
         Task<LeadViewModel> Save(LeadSaveModel lead);
 
-        Task<LeadViewModel> GetById(int Id);
+        Task<LeadViewModel> GetById(Guid id);
     }
 }

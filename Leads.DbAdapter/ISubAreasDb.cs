@@ -11,6 +11,6 @@
 
         Task<List<SubAreaViewModel>> GetByPinCode(string pinCode);
 
-        Task<SubAreaViewModel> GetById(int Id);
+        Task<SubAreaViewModel> GetById(int id);
     }
 }
