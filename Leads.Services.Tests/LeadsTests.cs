@@ -28,7 +28,7 @@ namespace Leads.Services.Tests
         }
 
         [Fact]
-        public async void WhenYouGetByIdDbReturnsCorrectViewModel()
+        public async void WhenYouGetByIdDb_ReturnsCorrectViewModel()
         {
             var lead = new LeadViewModel();
             this.leadsMock.GetReturn = lead;
@@ -39,7 +39,7 @@ namespace Leads.Services.Tests
         }
 
         [Fact]
-        public async void WhenYouGetByIdDbReturnsSubAreaAsWell()
+        public async void WhenYouGetByIdDb_ReturnsSubAreaAsWell()
         {
             var lead = new LeadViewModel();
             this.leadsMock.GetReturn = lead;
@@ -52,7 +52,7 @@ namespace Leads.Services.Tests
         }
 
         [Fact]
-        public async void WhenYouGetByInvalidIdDbReturnsNull()
+        public async void WhenYouGetByInvalidIdDb_ReturnsNull()
         {
             leadsMock.GetReturn = null;
 
@@ -61,14 +61,14 @@ namespace Leads.Services.Tests
         }
 
         [Fact]
-        public async void WhenNullIsSentToSaveModelExceptionIsThrown()
+        public async void WhenNullIsSentToSaveModel_ExceptionIsThrown()
         {
             await Assert.ThrowsAsync<ArgumentNullException>(
                 async () => await this.leadsService.Save(null).ConfigureAwait(false));
         }
 
         [Fact]
-        public async void WhenValidSaveModelIsSavedResultIsTrue()
+        public async void WhenValidSaveModelIsSaved_ResultIsId()
         {
             subAreasMock.GetByIdReturn = new SubAreaViewModel{ PinCode = "123" };
             var saveModel = new LeadSaveModel
@@ -78,11 +78,11 @@ namespace Leads.Services.Tests
             leadsMock.SaveReturn = Guid.NewGuid();
 
             var resultLead = await this.leadsService.Save(saveModel).ConfigureAwait(false);
-            Assert.True(resultLead);
+            Assert.Equal(resultLead, leadsMock.SaveReturn);
         }
 
         [Fact]
-        public async void WhenValidSaveModelIsSavedDbIsCalled()
+        public async void WhenValidSaveModelIsSaved_DbIsCalled()
         {
             subAreasMock.GetByIdReturn = new SubAreaViewModel{ PinCode = "123" };
             var saveModel = new LeadSaveModel
@@ -96,7 +96,7 @@ namespace Leads.Services.Tests
         }
 
         [Fact]
-        public async void WhenSaveModelWithoutNameIsSavedValidationExceptionIsThrown()
+        public async void WhenSaveModelWithoutNameIsSaved_ValidationExceptionIsThrown()
         {
             var saveModel = new LeadSaveModel
                  {
@@ -113,10 +113,9 @@ namespace Leads.Services.Tests
             await Assert.ThrowsAsync<ArgumentException>(
                 async () => await this.leadsService.Save(saveModel).ConfigureAwait(false));
         }
-
         
         [Fact]
-        public async void WhenSaveModelWithoutAddressIsSavedValidationExceptionIsThrown()
+        public async void WhenSaveModelWithoutAddressIsSaved_ValidationExceptionIsThrown()
         {
             var saveModel = new LeadSaveModel
                                 {
@@ -135,7 +134,7 @@ namespace Leads.Services.Tests
         }
 
         [Fact]
-        public async void WhenSaveModelWithoutPinCodeIsSavedValidationExceptionIsThrown()
+        public async void WhenSaveModelWithoutPinCodeIsSaved_ValidationExceptionIsThrown()
         {
             var saveModel = new LeadSaveModel
                                 {
@@ -154,7 +153,7 @@ namespace Leads.Services.Tests
         }
 
         [Fact]
-        public async void WhenSaveModelWithWhitespacesIsSavedValidationFixesIt()
+        public async void WhenSaveModelWithWhitespacesIsSaved_ValidationFixesIt()
         {
             subAreasMock.GetByIdReturn = new SubAreaViewModel{ PinCode = "1234" };
             var saveModel = new LeadSaveModel
@@ -169,7 +168,7 @@ namespace Leads.Services.Tests
         }
 
         [Fact]
-        public async void WhenInvalidPinCodeSubAreaIdCombinationIsSavedThrowException()
+        public async void WhenInvalidPinCodeSubAreaIdCombinationIsSaved_ThrowException()
         {
             var saveModel = new LeadSaveModel
                                 {

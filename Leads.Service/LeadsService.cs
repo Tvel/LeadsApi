@@ -18,15 +18,13 @@ namespace Leads.Services
             this.subAreasDb = subAreasDb;
         }
 
-        public async Task<bool> Save(LeadSaveModel lead)
+        public async Task<Guid> Save(LeadSaveModel lead)
         {
             ValidateSaveModel(lead);
             await ValidateSubArea(lead.SubAreaId, lead.PinCode)
                 .ConfigureAwait(false);
-            await this.leadsDb.Save(lead)
+            return await this.leadsDb.Save(lead)
                 .ConfigureAwait(false);
-
-            return true;
         }
 
         private async Task ValidateSubArea(int leadSubAreaId, string leadPinCode)

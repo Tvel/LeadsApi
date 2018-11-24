@@ -24,6 +24,8 @@
         /// <param name="id">Guid of the lead</param>
         /// <returns></returns>
         [HttpGet("{id}", Name = "Get")]
+        [ProducesResponseType(200, Type = typeof(LeadViewModel))]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<LeadViewModel>> Get(Guid id)
         {
             var lead = await leadsService.Get(id);
@@ -41,8 +43,14 @@
         /// <param name="candidate"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] LeadsSaveViewModel candidate)
+        [ProducesResponseType(200, Type = typeof(LeadsSaveReturnModel))]
+        [ProducesResponseType(400, Type = typeof(ErrorViewModel))]
+        public async Task<ActionResult<LeadsSaveReturnModel>> Post([FromBody] LeadsSaveViewModel candidate)
         {
+            if (!candidate.SubAreaId.HasValue)
+            {
+                return this.BadRequest(new ErrorViewModel("SubArea must have valid value"));
+            }
             try
             {
                 var leadSaveModel = new LeadSaveModel
@@ -56,17 +64,13 @@
                                         };
 
                 var result = await leadsService.Save(leadSaveModel);
-                if (result)
-                {
-                    return this.Ok("Ok");
-                }
+
+                return this.Ok(new LeadsSaveReturnModel(result));
             }
             catch (Exception e)
             {
-                return this.BadRequest(e.Message);
+                return this.BadRequest(new ErrorViewModel(e.Message));
             }
-
-            return this.BadRequest("Cannot Save");
         }
     }
 }
