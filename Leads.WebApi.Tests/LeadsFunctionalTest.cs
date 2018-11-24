@@ -59,7 +59,7 @@
 
             Assert.False(string.IsNullOrWhiteSpace(content));
 
-            var leadSaveReturnModel = JsonConvert.DeserializeObject<LeadsSaveReturnModel>(content);
+            var leadSaveReturnModel = JsonConvert.DeserializeObject<LeadsSaveSuccessModel>(content);
 
             Assert.NotNull(leadSaveReturnModel);
             Assert.NotEqual(Guid.Empty, leadSaveReturnModel.Id);
@@ -154,7 +154,7 @@
         public async void GetByExistingId_ReturnsLead()
         {
             var idJson = await CallSaveLeadApi("name", "addr", "123", 1, "123456", "email@email.email");
-            var leadSaveReturnModel = JsonConvert.DeserializeObject<LeadsSaveReturnModel>(idJson);
+            var leadSaveReturnModel = JsonConvert.DeserializeObject<LeadsSaveSuccessModel>(idJson);
 
             var response = await client.GetAsync($"api/leads/{leadSaveReturnModel.Id}");
             response.EnsureSuccessStatusCode();

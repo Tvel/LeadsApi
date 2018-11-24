@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Leads.Services.Tests.Mocks;
 using Leads.Models;
@@ -27,7 +26,7 @@ namespace Leads.Services.Tests
         }
 
         [Fact]
-        public async void GetAllReturnsResultFromDb()
+        public async void GetAll_ReturnsResultFromDb()
         {
             var resultList = new List<SubAreaViewModel>();
             this.subAreasDbMock.GetAllReturn = resultList;
@@ -37,14 +36,14 @@ namespace Leads.Services.Tests
         }
 
         [Fact]
-        public async void GetAllCallsDb()
+        public async void GetAll_CallsDb()
         {
             var result = await this.subAreasService.GetAll().ConfigureAwait(false);
             Assert.True(this.subAreasDbMock.IsGetAllCalled);
         }
 
         [Fact]
-        public async void GetByPinCodeReturnsResultFromDb()
+        public async void GetByPinCode_ReturnsResultFromDb()
         {
             var resultList = new List<SubAreaViewModel>();
             this.subAreasDbMock.GetByPinCodeReturn = resultList;
@@ -54,7 +53,7 @@ namespace Leads.Services.Tests
         }
 
         [Fact]
-        public async void GetByPinCodeCallsDb()
+        public async void GetByPinCode_CallsDb()
         {
             var resultList = new List<SubAreaViewModel>();
 
@@ -63,7 +62,7 @@ namespace Leads.Services.Tests
         }
 
         [Fact]
-        public async void GetByPinCodeThrowsIfNull()
+        public async void GetByPinCode_ThrowsIfNull()
         {
             var resultList = new List<SubAreaViewModel>();
 

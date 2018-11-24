@@ -2,9 +2,9 @@
 {
     using System;
 
-    public class LeadsSaveReturnModel
+    public class LeadsSaveSuccessModel
     {
-        public LeadsSaveReturnModel(Guid id)
+        public LeadsSaveSuccessModel(Guid id)
         {
             Id = id;
         }

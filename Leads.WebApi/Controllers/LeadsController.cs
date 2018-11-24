@@ -43,9 +43,9 @@
         /// <param name="candidate"></param>
         /// <returns></returns>
         [HttpPost]
-        [ProducesResponseType(200, Type = typeof(LeadsSaveReturnModel))]
+        [ProducesResponseType(200, Type = typeof(LeadsSaveSuccessModel))]
         [ProducesResponseType(400, Type = typeof(ErrorViewModel))]
-        public async Task<ActionResult<LeadsSaveReturnModel>> Post([FromBody] LeadsSaveViewModel candidate)
+        public async Task<ActionResult<LeadsSaveSuccessModel>> Post([FromBody] LeadsSaveViewModel candidate)
         {
             if (!candidate.SubAreaId.HasValue)
             {
@@ -65,7 +65,7 @@
 
                 var result = await leadsService.Save(leadSaveModel);
 
-                return this.Ok(new LeadsSaveReturnModel(result));
+                return this.Ok(new LeadsSaveSuccessModel(result));
             }
             catch (Exception e)
             {

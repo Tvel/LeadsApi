@@ -1,30 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-
-namespace Leads.WebApi
+﻿namespace Leads.WebApi
 {
+    using System;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using System.IO;
     using System.Reflection;
-
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.EntityFrameworkCore;
+    using Swashbuckle.AspNetCore.Swagger;
     using Leads.Database.Ef;
     using Leads.Database.File;
     using Leads.Database.Static;
     using Leads.DbAdapter;
     using Leads.Services;
-
-    using Microsoft.EntityFrameworkCore;
-
-    using Swashbuckle.AspNetCore.Swagger;
 
     public class Startup
     {
@@ -57,7 +47,7 @@ namespace Leads.WebApi
                     services.AddScoped<ISubAreasDb, SubAreasEfDb>();
                     break;
                 case "FileAndStatic":
-                    services.AddScoped<ILeadsDb, LeadsFileDb>(x => new LeadsFileDb(this.Configuration.GetConnectionString("FileDirectory")));
+                    services.AddScoped<ILeadsDb, LeadsFileDb>(_ => new LeadsFileDb(this.Configuration.GetConnectionString("FileDirectory")));
                     services.AddScoped<ISubAreasDb, SubAreasStaticDatabase>();
                     break;
                 default:
@@ -90,11 +80,8 @@ namespace Leads.WebApi
                 app.UseHsts();
             }
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            //  Swagger as a JSON endpoint.
             app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
-            // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Leads API V1"));
 
             app.UseHttpsRedirection();

@@ -3,11 +3,9 @@
     using System;
     using System.IO;
     using System.Threading.Tasks;
-
+    using Newtonsoft.Json;
     using Leads.DbAdapter;
     using Leads.Models;
-
-    using Newtonsoft.Json;
 
     public class LeadsFileDb : ILeadsDb
     {
