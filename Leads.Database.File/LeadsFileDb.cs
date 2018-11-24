@@ -18,9 +18,9 @@
             this.path = directory;
         }
 
-        public async Task<LeadViewModel> Save(LeadSaveModel lead)
+        public async Task<Guid> Save(LeadSaveModel lead)
         {
-            Guid id = Guid.NewGuid();
+            var id = Guid.NewGuid();
             var jsonObj = new {
                                   Id = id,
                                   Address = lead.Address,
@@ -37,16 +37,7 @@
             file.Directory?.Create(); // If the directory already exists, this method does nothing.
             await File.WriteAllTextAsync(filePath, json);
 
-            return new LeadViewModel
-                       {
-                           Id = id,
-                           Address = lead.Address,
-                           Email = lead.Email,
-                           MobileNumber = lead.MobileNumber,
-                           Name = lead.Name,
-                           PinCode = lead.PinCode,
-                           SubAreaId = lead.SubAreaId
-                       };
+            return id;
         }
 
         public async Task<LeadViewModel> GetById(Guid id)

@@ -17,6 +17,10 @@ using Leads.DbAdapter;
 using Leads.Services;
 namespace Leads.WebApi.Tests
 {
+    using Leads.Database.Ef;
+
+    using Microsoft.EntityFrameworkCore;
+
     public class TestingConfigurationFactory<TStartup>
     : WebApplicationFactory<Startup>
     {
@@ -24,59 +28,28 @@ namespace Leads.WebApi.Tests
         {
             builder.ConfigureServices(services =>
             {
+                var serviceProvider = new ServiceCollection()
+                    .AddEntityFrameworkInMemoryDatabase()
+                    .BuildServiceProvider();
 
-                services.AddScoped<ILeadsDb, LeadsFileDb>(
-                    provider => new LeadsFileDb("LeadsFiles"));
-                services.AddScoped<ISubAreasDb, SubAreasStaticDatabase>();
+                services.AddDbContext<LeadsContext>(options =>
+                {
+                    options.UseInMemoryDatabase("InMemoryDbForTesting");
+                    options.UseInternalServiceProvider(serviceProvider);
+                });
+
+                services.AddScoped<ILeadsDb, LeadsEfDb>();
+                services.AddScoped<ISubAreasDb, SubAreasEfDb>();
                 services.AddScoped<LeadsService>();
                 services.AddScoped<SubAreasService>();
 
-                //// Create a new service provider.
-                //var serviceProvider = new ServiceCollection()
-                //    .AddEntityFrameworkInMemoryDatabase()
-                //    .BuildServiceProvider();
+                var sp = services.BuildServiceProvider();
 
-                //// Add a database context (ApplicationDbContext) using an in-memory
-                //// database for testing.
-                //services.AddDbContext<CatalogContext>(options =>
-                //{
-                //    options.UseInMemoryDatabase("InMemoryDbForTesting");
-                //    options.UseInternalServiceProvider(serviceProvider);
-                //});
-
-                //services.AddDbContext<AppIdentityDbContext>(options =>
-                //{
-                //    options.UseInMemoryDatabase("Identity");
-                //    options.UseInternalServiceProvider(serviceProvider);
-                //});
-
-                //// Build the service provider.
-                //var sp = services.BuildServiceProvider();
-
-                //// Create a scope to obtain a reference to the database
-                //// context (ApplicationDbContext).
                 //using (var scope = sp.CreateScope())
                 //{
                 //    var scopedServices = scope.ServiceProvider;
-                //    var db = scopedServices.GetRequiredService<CatalogContext>();
-                //    var loggerFactory = scopedServices.GetRequiredService<ILoggerFactory>();
-
-                //    var logger = scopedServices
-                //        .GetRequiredService<ILogger<CustomWebRazorPagesApplicationFactory<TStartup>>>();
-
-                //    // Ensure the database is created.
+                //    var db = scopedServices.GetRequiredService<LeadsContext>();
                 //    db.Database.EnsureCreated();
-
-                //    try
-                //    {
-                //        // Seed the database with test data.
-                //        CatalogContextSeed.SeedAsync(db, loggerFactory).Wait();
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        logger.LogError(ex, $"An error occurred seeding the " +
-                //            "database with test messages. Error: {ex.Message}");
-                //    }
                 //}
             });
         }

@@ -7,7 +7,7 @@
 
     public interface ILeadsDb
     {
-        Task<LeadViewModel> Save(LeadSaveModel lead);
+        Task<Guid> Save(LeadSaveModel lead);
 
         Task<LeadViewModel> GetById(Guid id);
     }

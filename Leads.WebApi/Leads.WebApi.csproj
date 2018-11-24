@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Leads.Database.Ef\Leads.Database.Ef.csproj" />
     <ProjectReference Include="..\Leads.Database.File\Leads.Database.File.csproj" />
     <ProjectReference Include="..\Leads.Database.Static\Leads.Database.Static.csproj" />
     <ProjectReference Include="..\Leads.DbAdapter\Leads.DbAdapter.csproj" />

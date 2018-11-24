@@ -75,8 +75,7 @@ namespace Leads.Services.Tests
                                 {
                 Name = "name", Address = "addr", Email = "email@email.email", MobileNumber = "12345", PinCode = "123", SubAreaId = 1
                                 };
-            var viewModel = new LeadViewModel();
-            leadsMock.SaveReturn = viewModel;
+            leadsMock.SaveReturn = Guid.NewGuid();
 
             var resultLead = await this.leadsService.Save(saveModel).ConfigureAwait(false);
             Assert.True(resultLead);
@@ -90,8 +89,7 @@ namespace Leads.Services.Tests
                                 {
                                     Name = "name", Address = "addr", Email = "email@email.email", MobileNumber = "12345", PinCode = "123", SubAreaId = 1
                                 };
-            var viewModel = new LeadViewModel();
-            leadsMock.SaveReturn = viewModel;
+            leadsMock.SaveReturn = Guid.NewGuid();
 
             var resultLead = await this.leadsService.Save(saveModel).ConfigureAwait(false);
             Assert.True(leadsMock.IsSaveCalled);

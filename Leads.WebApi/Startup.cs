@@ -13,10 +13,13 @@ using Microsoft.Extensions.Options;
 
 namespace Leads.WebApi
 {
+    using Leads.Database.Ef;
     using Leads.Database.File;
     using Leads.Database.Static;
     using Leads.DbAdapter;
     using Leads.Services;
+
+    using Microsoft.EntityFrameworkCore;
 
     public class Startup
     {
@@ -32,8 +35,30 @@ namespace Leads.WebApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddScoped<ILeadsDb, LeadsFileDb>();
-            services.AddScoped<ISubAreasDb, SubAreasStaticDatabase>();
+            switch (this.Configuration["DbType"])
+            {
+                case "SqlServer":
+                    services.AddDbContext<LeadsContext>(
+                        options => options.UseSqlServer(this.Configuration.GetConnectionString("LeadsSqlServer")));
+
+                    services.AddScoped<ILeadsDb, LeadsEfDb>();
+                    services.AddScoped<ISubAreasDb, SubAreasEfDb>();
+                    break;
+                case "SQLite":
+                    services.AddDbContext<LeadsContext>(
+                        options => { options.UseSqlite(this.Configuration.GetConnectionString("LeadsSQLite")); });
+
+                    services.AddScoped<ILeadsDb, LeadsEfDb>();
+                    services.AddScoped<ISubAreasDb, SubAreasEfDb>();
+                    break;
+                case "FileAndStatic":
+                    services.AddScoped<ILeadsDb, LeadsFileDb>(x => new LeadsFileDb(this.Configuration.GetConnectionString("FileDirectory")));
+                    services.AddScoped<ISubAreasDb, SubAreasStaticDatabase>();
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
             services.AddScoped<LeadsService>();
             services.AddScoped<SubAreasService>();
         }
@@ -52,6 +77,31 @@ namespace Leads.WebApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            switch (this.Configuration["DbType"])
+            {
+                case "SqlServer":
+                case "SQLite":
+                    using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+                        .CreateScope())
+                    {
+                        var context = serviceScope.ServiceProvider.GetService<LeadsContext>();
+
+                        if (context.Database.IsInMemory())
+                        {
+                            context.Database.EnsureCreated();
+                        }
+                        else
+                        {
+                            context.Database.Migrate();
+                        }
+                    }
+                    break;
+                case "FileAndStatic":
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
         }
     }
 }
