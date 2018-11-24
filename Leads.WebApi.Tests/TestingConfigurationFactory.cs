@@ -1,25 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
-using Leads.Database.File;
-using Leads.Database.Static;
-using Leads.DbAdapter;
-using Leads.Services;
-namespace Leads.WebApi.Tests
+﻿namespace Leads.WebApi.Tests
 {
-    using Leads.Database.Ef;
-
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc.Testing;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using Leads.DbAdapter;
+    using Leads.Services;
+    using Leads.Database.Ef;
 
     public class TestingConfigurationFactory<TStartup>
     : WebApplicationFactory<Startup>

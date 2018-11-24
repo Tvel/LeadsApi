@@ -13,6 +13,9 @@ using Microsoft.Extensions.Options;
 
 namespace Leads.WebApi
 {
+    using System.IO;
+    using System.Reflection;
+
     using Leads.Database.Ef;
     using Leads.Database.File;
     using Leads.Database.Static;
@@ -68,6 +71,10 @@ namespace Leads.WebApi
             services.AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc("v1", new Info { Title = "Leads API", Version = "v1" });
+
+                    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                    c.IncludeXmlComments(xmlPath);
                 });
         }
 
@@ -88,10 +95,7 @@ namespace Leads.WebApi
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Leads API V1");
-                });
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Leads API V1"));
 
             app.UseHttpsRedirection();
             app.UseMvc();

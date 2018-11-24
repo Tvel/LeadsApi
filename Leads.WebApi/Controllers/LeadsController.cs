@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Leads.WebApi.Controllers
+﻿namespace Leads.WebApi.Controllers
 {
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
     using Leads.Models;
     using Leads.Services;
     using Leads.WebApi.Models;
@@ -22,7 +18,11 @@ namespace Leads.WebApi.Controllers
             this.leadsService = leadsService;
         }
 
-        // GET: api/Leads/e7c60642-6be2-41ec-b329-b0ef3bb8f556
+        /// <summary>
+        /// Gets Lead by id
+        /// </summary>
+        /// <param name="id">Guid of the lead</param>
+        /// <returns></returns>
         [HttpGet("{id}", Name = "Get")]
         public async Task<ActionResult<LeadViewModel>> Get(Guid id)
         {
@@ -35,7 +35,11 @@ namespace Leads.WebApi.Controllers
             return this.Ok(lead);
         }
 
-        // POST: api/Leads
+        /// <summary>
+        /// Saves new lead
+        /// </summary>
+        /// <param name="candidate"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] LeadsSaveViewModel candidate)
         {

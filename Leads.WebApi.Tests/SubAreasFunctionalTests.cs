@@ -1,12 +1,6 @@
 ﻿namespace Leads.WebApi.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
     using System.Net.Http;
-
-    using Microsoft.AspNetCore.Mvc.Testing;
-
     using Xunit;
 
     public class SubAreasFunctionalTests : IClassFixture<TestingConfigurationFactory<Startup>>

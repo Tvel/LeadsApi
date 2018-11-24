@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Leads.WebApi.Controllers
 {
-    using Leads.DbAdapter;
     using Leads.Models;
     using Leads.Services;
 
@@ -22,14 +21,21 @@ namespace Leads.WebApi.Controllers
             this.subAreasService = subAreasService;
         }
 
-        // GET: api/SubAreas
+        /// <summary>
+        /// All SubAreas
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public Task<List<SubAreaViewModel>> Get()
         {
             return this.subAreasService.GetAll();
         }
 
-        // GET: api/SubAreas/Filter/PinCode/5
+        /// <summary>
+        /// Filter subareas by PinCode
+        /// </summary>
+        /// <param name="pinCode"></param>
+        /// <returns></returns>
         [HttpGet("Filter/PinCode/{pinCode}", Name = "GetByPinCode")]
         public Task<List<SubAreaViewModel>> Get(string pinCode)
         {
