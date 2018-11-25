@@ -15,7 +15,6 @@
     using Leads.Database.Static;
     using Leads.DbAdapter;
     using Leads.Services;
-    using Microsoft.AspNetCore.Rewrite;
 
     public class Startup
     {
@@ -80,9 +79,6 @@
             {
                 app.UseHsts();
             }
-
-            app.UseRewriter(
-                new RewriteOptions().AddRedirectToHttps().AddRedirect("^$", "swagger"));
 
             //  Swagger as a JSON endpoint.
             app.UseSwagger();

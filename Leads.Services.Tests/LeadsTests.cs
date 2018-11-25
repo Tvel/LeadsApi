@@ -113,7 +113,7 @@ namespace Leads.Services.Tests
             await Assert.ThrowsAsync<ArgumentException>(
                 async () => await this.leadsService.Save(saveModel).ConfigureAwait(false));
         }
-        
+
         [Fact]
         public async void WhenSaveModelWithoutAddressIsSaved_ValidationExceptionIsThrown()
         {
