@@ -41,7 +41,7 @@
                     break;
                 case "SQLite":
                     services.AddDbContext<LeadsContext>(
-                        options => { options.UseSqlite(this.Configuration.GetConnectionString("LeadsSQLite")); });
+                        options => options.UseSqlite(this.Configuration.GetConnectionString("LeadsSQLite")));
 
                     services.AddScoped<ILeadsDb, LeadsEfDb>();
                     services.AddScoped<ISubAreasDb, SubAreasEfDb>();
