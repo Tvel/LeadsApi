@@ -16,7 +16,7 @@ namespace Leads.Database.Ef.Migrations
                     Name = table.Column<string>(nullable: false),
                     PinCode = table.Column<string>(nullable: false),
                     SubAreaId = table.Column<int>(nullable: false),
-                    Address = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: false),
                     MobileNumber = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true)
                 },

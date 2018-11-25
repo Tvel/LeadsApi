@@ -27,6 +27,9 @@
             modelBuilder.Entity<Lead>()
                 .Property(p => p.PinCode)
                 .IsRequired();
+            modelBuilder.Entity<Lead>()
+                .Property(p => p.Address)
+                .IsRequired();
 
             modelBuilder.Entity<SubArea>().HasKey(k => k.Id);
             modelBuilder.Entity<SubArea>().HasIndex(i => i.Id);
